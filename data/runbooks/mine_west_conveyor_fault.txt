@@ -1,0 +1,11 @@
+Site: mine_west
+AssetType: conveyor
+EventType: motor_fault
+
+Title: Conveyor motor fault response
+
+1. Confirm if the motor tripped under load or during startup.
+2. Check overload relay state and upstream breaker status.
+3. Review temperature, current draw, and bearing vibration from the last hour.
+4. Inspect whether the conveyor is jammed or overloaded.
+5. Coordinate with site operations before restart.

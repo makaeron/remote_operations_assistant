@@ -1,0 +1,11 @@
+Site: utility_east
+AssetType: transformer_controller
+EventType: login_failure_burst
+
+Title: Repeated controller login failures
+
+1. Confirm whether the failures are from a known engineering workstation.
+2. Compare source IP or host identity with the approved maintenance list.
+3. Check if login failures happened during a planned remote session.
+4. Lock remote access route if failures continue and no valid maintenance ticket exists.
+5. Notify cyber operations and site supervisor for investigation.

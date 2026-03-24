@@ -1,0 +1,12 @@
+Site: water_north
+AssetType: pump
+EventType: pressure_alarm
+
+Title: Pump high pressure response
+
+1. Confirm that the pressure reading is not stale by checking the last telemetry timestamp.
+2. Compare the current pressure with the last 15-minute trend.
+3. Verify whether the discharge valve position changed recently.
+4. Check for downstream blockage or misconfigured control logic.
+5. If pressure stays above threshold for more than 2 minutes, reduce pump load and notify maintenance.
+6. Escalate immediately if pump temperature and vibration alarms are also present.

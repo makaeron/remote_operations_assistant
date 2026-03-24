@@ -1,0 +1,12 @@
+Verification notes
+
+1. Installed dependencies from requirements.txt.
+2. Ran:
+   python scripts/run_smoke_test.py
+   Result: Passed. Events were ingested, incidents were created, ranked actions and shift summary returned successfully.
+3. Started API with:
+   uvicorn app.main:app --host 127.0.0.1 --port 8001
+4. Called:
+   GET http://127.0.0.1:8001/
+   Result:
+   {"message":"Remote Operations Assistant is running.","main_input":"Operational events through REST API","operator_output":["/ops/incidents","/ops/ranked-actions","/ops/shift-summary"]}

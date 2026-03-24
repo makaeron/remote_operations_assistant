@@ -1,0 +1,11 @@
+Site: water_north
+AssetType: plc
+EventType: device_disconnect
+
+Title: PLC communication loss
+
+1. Confirm whether the device is unreachable from SCADA and from the edge gateway.
+2. Check switch port link status and recent network changes.
+3. Verify if there was a maintenance window or power event.
+4. Review whether neighboring assets on the same panel also lost communication.
+5. Escalate to field technician if communication is not restored within 5 minutes.

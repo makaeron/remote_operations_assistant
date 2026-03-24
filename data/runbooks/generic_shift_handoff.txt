@@ -1,0 +1,11 @@
+Site: generic
+AssetType: any
+EventType: any
+
+Title: Shift handoff guidance
+
+1. Review all unresolved high-priority incidents.
+2. Confirm which sites still require local technician dispatch.
+3. Note repeated alarms that may indicate chronic equipment or network issues.
+4. Highlight the site with the highest current workload.
+5. Record what action was taken and what is still pending.
