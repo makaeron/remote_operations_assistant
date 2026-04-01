@@ -9,6 +9,7 @@ from app.models import Event, Incident
 from app.schemas import EventIn
 from app.services.rules_engine import score_event
 from app.services.rag_service import LocalRAGService
+from app.services.metrics_service import metrics_store
 
 
 class IngestionService:
@@ -20,6 +21,12 @@ class IngestionService:
 
     def ingest_event(self, db: Session, event_in: EventIn) -> Event:
         """Persist an event, score it, and possibly create an incident."""
+        metrics_store.record_total()
+        if event_in.timestamp is not None:
+            metrics_store.record_freshness(event_in.timestamp)
+       
+        metrics_store.record_accepted()
+
         score = score_event(event_in)
 
         # Save the raw event first.

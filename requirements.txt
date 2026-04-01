@@ -4,3 +4,7 @@ sqlalchemy==2.0.43
 pydantic==2.11.7
 scikit-learn==1.7.1
 httpx==0.28.1
+requests
+pandas
+streamlit
+streamlit-autorefresh
