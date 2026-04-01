@@ -30,18 +30,56 @@ st.sidebar.header("Controls")
 if st.sidebar.button("Refresh Data"):
     st.rerun()
 
-st.subheader("Backend Status")
-try:
-    response = requests.get(f"{BASE_URL}/", timeout=5)
-    response.raise_for_status()
-    health = response.json()
-    st.success(f"Backend is running: {health}")
-except Exception as e:
-    st.error(f"Backend not reachable: {e}")
-    st.stop()
-
-st.subheader("Incidents")
 incidents = get_json("/ops/incidents")
+
+if incidents and isinstance(incidents, list) and len(incidents) > 0:
+    df_incidents = pd.DataFrame(incidents)
+
+    # Quick Overview
+    critical_count = (df_incidents["severity"].astype(str).str.lower() == "critical").sum() if "severity" in df_incidents.columns else 0
+    high_count = (df_incidents["severity"].astype(str).str.lower() == "high").sum() if "severity" in df_incidents.columns else 0
+
+    st.subheader("Quick Overview")
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Total Incidents", len(df_incidents))
+    col2.metric("Critical Alerts", int(critical_count))
+    col3.metric("High Priority", int(high_count))
+
+    # Critical / High Alerts
+    st.subheader("Critical / High Alerts")
+
+    if "severity" in df_incidents.columns:
+        critical_rows = df_incidents[df_incidents["severity"].astype(str).str.lower() == "critical"]
+        high_rows = df_incidents[df_incidents["severity"].astype(str).str.lower() == "high"]
+
+        for _, row in critical_rows.head(5).iterrows():
+            site = row["site_name"] if "site_name" in df_incidents.columns else "Unknown Site"
+            event_type = row["event_type"] if "event_type" in df_incidents.columns else "Unknown Event"
+            score = row["priority_score"] if "priority_score" in df_incidents.columns else row.get("score", "N/A")
+            st.error(f"🚨 {site} | {event_type} | score {score}")
+
+        for _, row in high_rows.head(5).iterrows():
+            site = row["site_name"] if "site_name" in df_incidents.columns else "Unknown Site"
+            event_type = row["event_type"] if "event_type" in df_incidents.columns else "Unknown Event"
+            score = row["priority_score"] if "priority_score" in df_incidents.columns else row.get("score", "N/A")
+            st.warning(f"⚠️ {site} | {event_type} | score {score}")
+
+    # Incident Trend
+    if "severity" in df_incidents.columns:
+        st.subheader("Incident Trend")
+        severity_counts = df_incidents["severity"].astype(str).str.lower().value_counts()
+        st.bar_chart(severity_counts)
+
+    # Incidents Table
+    st.subheader("Incidents")
+    st.dataframe(df_incidents, width="stretch")
+
+else:
+    st.subheader("Incidents")
+    st.info("No incidents found.")
+
+
+
 if incidents:
     if isinstance(incidents, list) and len(incidents) > 0:
         df_incidents = pd.DataFrame(incidents)
