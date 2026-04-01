@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 
 class EventIn(BaseModel):
     """Incoming event payload used by clients and simulators."""
-
+    timestamp: Optional[datetime] = Field(default=None, examples=["2026-03-31T12:00:00Z"])
     site_id: str = Field(..., examples=["water_north"])
     site_name: str = Field(..., examples=["North Water Plant"])
     asset_id: str = Field(..., examples=["pump_07"])
